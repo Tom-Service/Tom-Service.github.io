@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TomChou — Projects</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="scroll-progress"></div>
+  <div id="site-nav"></div>
+  <main class="page">
+    <header class="hero" style="padding-bottom:0;">
+      <div class="container">
+        <div class="kicker">003 / PROJECTS</div>
+        <h1 class="hero-title" style="font-size:clamp(2.8rem,7vw,5.6rem);">作品集</h1>
+        <p class="hero-subtitle">卡片清單 + 分類切換 + 點進去看專案細節（像 aggielab 那種多頁）。</p>
+      </div>
+    </header>
+
+    <section class="section" data-tabs>
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">FILTER</div>
+          <h2 class="section-title">分類</h2>
+        </div>
+
+        <div class="tab-nav">
+          <button class="tab-button active" data-tab="p-all">All</button>
+          <button class="tab-button" data-tab="p-web">Web</button>
+          <button class="tab-button" data-tab="p-system">System</button>
+        </div>
+
+        <!-- All -->
+        <div class="tab-content active" id="p-all">
+          <div class="grid">
+            <a class="card card-link" href="project-ecommerce.html">
+              <div class="thumb"><img src="assets/img/project-ecommerce.svg" alt="E-commerce"/></div>
+              <div class="project-title">電商平台系統</div>
+              <div class="project-desc">支援大流量訪問、即時庫存與訂單流程。</div>
+              <div class="tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">MongoDB</span></div>
+            </a>
+
+            <a class="card card-link" href="project-dashboard.html">
+              <div class="thumb"><img src="assets/img/project-dashboard.svg" alt="Dashboard"/></div>
+              <div class="project-title">數據分析儀表板</div>
+              <div class="project-desc">即時報表、KPI 視覺化、多維度篩選。</div>
+              <div class="tags"><span class="tag">Vue</span><span class="tag">Python</span><span class="tag">PostgreSQL</span></div>
+            </a>
+
+            <a class="card card-link" href="project-iot.html">
+              <div class="thumb"><img src="assets/img/project-iot.svg" alt="IoT Monitor"/></div>
+              <div class="project-title">智慧監控系統</div>
+              <div class="project-desc">整合 IoT 資料流與告警機制，提升可觀測性。</div>
+              <div class="tags"><span class="tag">MQTT</span><span class="tag">InfluxDB</span><span class="tag">JavaScript</span></div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Web -->
+        <div class="tab-content" id="p-web">
+          <div class="grid">
+            <a class="card card-link" href="project-ecommerce.html">
+              <div class="thumb"><img src="assets/img/project-ecommerce.svg" alt="E-commerce"/></div>
+              <div class="project-title">電商平台系統</div>
+              <div class="project-desc">支援大流量訪問、即時庫存與訂單流程。</div>
+              <div class="tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">MongoDB</span></div>
+            </a>
+
+            <a class="card card-link" href="project-dashboard.html">
+              <div class="thumb"><img src="assets/img/project-dashboard.svg" alt="Dashboard"/></div>
+              <div class="project-title">數據分析儀表板</div>
+              <div class="project-desc">即時報表、KPI 視覺化、多維度篩選。</div>
+              <div class="tags"><span class="tag">Vue</span><span class="tag">Python</span><span class="tag">PostgreSQL</span></div>
+            </a>
+          </div>
+        </div>
+
+        <!-- System -->
+        <div class="tab-content" id="p-system">
+          <div class="grid">
+            <a class="card card-link" href="project-iot.html">
+              <div class="thumb"><img src="assets/img/project-iot.svg" alt="IoT Monitor"/></div>
+              <div class="project-title">智慧監控系統</div>
+              <div class="project-desc">整合 IoT 資料流與告警機制，提升可觀測性。</div>
+              <div class="tags"><span class="tag">MQTT</span><span class="tag">InfluxDB</span><span class="tag">JavaScript</span></div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+</main>
+  <div id="site-footer"></div>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

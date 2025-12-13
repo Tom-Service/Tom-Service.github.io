@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TomChou — Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="scroll-progress"></div>
+  <div id="site-nav"></div>
+  <main class="page">
+    <header class="hero" style="padding-bottom:0;">
+      <div class="container">
+        <div class="kicker">002 / RESUME</div>
+        <h1 class="hero-title" style="font-size:clamp(2.8rem,7vw,5.6rem);">履歷</h1>
+        <p class="hero-subtitle">把「你做過什麼、造成什麼影響」講到一看就懂。</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">WORK</div>
+          <h2 class="section-title">工作經歷</h2>
+        </div>
+
+        <div class="timeline">
+          <article class="exp">
+            <div class="exp-meta">
+              <div class="exp-period">2022 — Present</div>
+              <div class="exp-company">科技公司</div>
+            </div>
+            <div>
+              <div class="exp-role">資深軟體工程師</div>
+              <p class="exp-desc">領導前端開發與系統整合，負責核心架構設計與效能優化。</p>
+              <ul class="exp-list">
+                <li>重構核心架構，提升系統穩定性與可擴展性</li>
+                <li>建立 CI/CD 自動化流程，縮短部署時間 85%</li>
+                <li>優化資料庫查詢，降低 API 響應時間 40%</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="exp">
+            <div class="exp-meta">
+              <div class="exp-period">2019 — 2022</div>
+              <div class="exp-company">科勝科技股份有限公司</div>
+            </div>
+            <div>
+              <div class="exp-role">系統工程師</div>
+              <p class="exp-desc">參與多個系統的開發與維護，協助建立開發流程與規範。</p>
+              <ul class="exp-list">
+                <li>FAC LSC/DPM 系統設計與實作</li>
+                <li>FAC Lighting 系統開發與優化</li>
+                <li>TagName.X & Provider 系統架構設計建置</li>
+                <li>Local Historian 資料庫設計應用</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;" data-tabs>
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">SKILLS</div>
+          <h2 class="section-title">技術堆疊</h2>
+        </div>
+
+        <div class="tab-nav">
+          <button class="tab-button active" data-tab="skills-all">All</button>
+          <button class="tab-button" data-tab="skills-fe">Frontend</button>
+          <button class="tab-button" data-tab="skills-be">Backend</button>
+          <button class="tab-button" data-tab="skills-devops">Tools</button>
+        </div>
+
+        <div class="tab-content active" id="skills-all">
+          <div class="grid">
+            <div class="card">
+              <div class="kicker">Frontend</div>
+              <div class="project-title">UI / Web</div>
+              <div class="tags"><span class="tag">JavaScript</span><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">Vue</span></div>
+            </div>
+            <div class="card">
+              <div class="kicker">Backend</div>
+              <div class="project-title">API / Data</div>
+              <div class="tags"><span class="tag">Node.js</span><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">REST</span></div>
+            </div>
+            <div class="card">
+              <div class="kicker">Tools</div>
+              <div class="project-title">DevOps</div>
+              <div class="tags"><span class="tag">Git</span><span class="tag">Docker</span><span class="tag">CI/CD</span><span class="tag">AWS</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="skills-fe">
+          <div class="grid">
+            <div class="card">
+              <div class="kicker">Frontend</div>
+              <div class="project-title">核心</div>
+              <div class="project-desc">可把你實際用的工具補上：Vite/Webpack、UI Lib、Design System...</div>
+              <div class="tags"><span class="tag">React</span><span class="tag">Vue</span><span class="tag">HTML/CSS</span><span class="tag">RWD</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="skills-be">
+          <div class="grid">
+            <div class="card">
+              <div class="kicker">Backend</div>
+              <div class="project-title">核心</div>
+              <div class="project-desc">可補上：Auth、Cache、Queue、Observability、微服務等。</div>
+              <div class="tags"><span class="tag">Node</span><span class="tag">Python</span><span class="tag">SQL/NoSQL</span><span class="tag">API</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="skills-devops">
+          <div class="grid">
+            <div class="card">
+              <div class="kicker">Tools & DevOps</div>
+              <div class="project-title">核心</div>
+              <div class="project-desc">可補上：GitHub Actions、K8s、Nginx、Monitoring...</div>
+              <div class="tags"><span class="tag">Docker</span><span class="tag">CI/CD</span><span class="tag">Linux</span><span class="tag">Cloud</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+</main>
+  <div id="site-footer"></div>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>
