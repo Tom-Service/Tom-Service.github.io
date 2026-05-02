@@ -1,140 +1,150 @@
-(() => {
-  // ✅ 自動判斷 GitHub Pages base path（user page / project page 都能用）
-  // - user page:    https://<user>.github.io/            => BASE="/"
-  // - project page: https://<user>.github.io/<repo>/     => BASE="/<repo>/"
-  const BASE = (() => {
-    const p = location.pathname.replace(/\/+$/, ""); // 去尾巴 /
-    const parts = p.split("/").filter(Boolean);
+/* ================================================================
+   TomChou Portfolio — site.js
+   - Nav & footer injection
+   - Active nav state
+   - Tab switching
+   - Scroll progress bar
+   - Mobile hamburger
+   ================================================================ */
 
-    // 例：/Tom-Service.github.io/projects.html -> parts[0] = "Tom-Service.github.io"
-    if (parts.length > 0 && !parts[0].endsWith(".html") && parts[0] !== "assets") {
-      return `/${parts[0]}/`;
-    }
-    return "/";
-  })();
+(function () {
+  'use strict';
 
-  const NAV_HTML = `
-    <nav id="navbar">
-      <a class="logo" href="${BASE}" data-nav>TomChou</a>
-      <ul class="nav-links">
-        <li><a href="${BASE}" data-nav>Home</a></li>
-        <li><a href="${BASE}resume.html" data-nav>Resume</a></li>
-        <li><a href="${BASE}projects.html" data-nav>Projects</a></li>
-        <li><a href="${BASE}contact.html" data-nav>Contact</a></li>
-      </ul>
-    </nav>
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
-    <div class="decorative-line" aria-hidden="true"></div>
-  `;
+  /* ── Helpers ── */
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+  const page = location.pathname.split('/').pop() || 'index.html';
 
-  const FOOTER_HTML = `
-    <footer>
-      <div class="footer-inner">
-        <div class="footer-text">© 2025 TomChou. 版權所有</div>
-        <div class="footer-year">2025</div>
-      </div>
-    </footer>
-  `;
+  /* ── Nav HTML ── */
+  const NAV_LINKS = [
+    { href: 'index.html',    label: 'Home'    },
+    { href: 'resume.html',   label: 'Resume'  },
+    { href: 'projects.html', label: 'Projects'},
+    { href: 'contact.html',  label: 'Contact' },
+  ];
 
-  function injectShell() {
-    const navHost = document.getElementById("site-nav");
-    const footerHost = document.getElementById("site-footer");
-    if (navHost) navHost.innerHTML = NAV_HTML;
-    if (footerHost) footerHost.innerHTML = FOOTER_HTML;
-  }
+  function buildNav() {
+    const el = $('#site-nav');
+    if (!el) return;
 
-  // ✅ active 高亮：只比對「最後的檔名」即可（避免 BASE 影響）
-  function setActiveLink() {
-    const file = (location.pathname.split("/").pop() || "").toLowerCase(); // e.g. resume.html / ""
-    document.querySelectorAll('a[data-nav]').forEach(a => {
-      const href = (a.getAttribute("href") || "").toLowerCase();
-      const last = href.split("/").filter(Boolean).pop() || ""; // e.g. resume.html / ""
-      a.classList.toggle("active", last === file);
-      // Home：當網址最後是 "" 或 "index.html" 時也算 Home
-      if ((file === "" || file === "index.html") && (last === "")) a.classList.add("active");
+    const links = NAV_LINKS.map(({ href, label }) => {
+      const active = href === page ? ' active' : '';
+      return `<li><a href="${href}" class="${active.trim()}">${label}</a></li>`;
+    }).join('');
+
+    el.innerHTML = `
+      <nav class="site-nav">
+        <div class="nav-inner">
+          <a href="index.html" class="nav-logo">TomChou</a>
+          <ul class="nav-links" id="nav-links">${links}</ul>
+          <button class="nav-toggle" id="nav-toggle" aria-label="選單" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </nav>`;
+
+    /* hamburger */
+    const toggle = $('#nav-toggle');
+    const navLinks = $('#nav-links');
+    toggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      toggle.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open);
     });
-  }
 
-  // ✅ 切頁淡出（只對同站連結）
-  function enableSmoothLeave() {
-    document.querySelectorAll('a[href]').forEach(a => {
-      a.addEventListener("click", (e) => {
-        const href = a.getAttribute("href");
-        if (!href) return;
-
-        // 外站不處理
-        const url = new URL(a.href, location.href);
-        if (url.origin !== location.origin) return;
-
-        // hash 跳轉不淡出
-        if (href.startsWith("#")) return;
-
-        // 同頁不處理
-        if (url.pathname === location.pathname && url.search === location.search) return;
-
-        e.preventDefault();
-        document.body.classList.add("is-leaving");
-        setTimeout(() => { location.href = a.href; }, 170);
+    /* close on link click (mobile) */
+    $$('a', navLinks).forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', false);
       });
     });
   }
 
-  function enableBackToTop() {
-    const btn = document.getElementById("backToTop");
-    window.addEventListener("scroll", () => {
-      if (!btn) return;
-      btn.classList.toggle("show", window.scrollY > 520);
-    });
-    btn?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  /* ── Footer HTML ── */
+  function buildFooter() {
+    const el = $('#site-footer');
+    if (!el) return;
+    const year = new Date().getFullYear();
+    el.innerHTML = `
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <span class="footer-copy">© ${year} Tom Chou — Built with care.</span>
+          <ul class="footer-links">
+            <li><a href="mailto:tomchou.service@gmail.com">Email</a></li>
+            <li><a href="https://github.com/Tom-Service" target="_blank" rel="noreferrer">GitHub</a></li>
+          </ul>
+        </div>
+      </footer>`;
   }
 
-  function enableNavbarScroll() {
-    const navbar = document.getElementById("navbar");
-    window.addEventListener("scroll", () => {
-      navbar?.classList.toggle("scrolled", window.scrollY > 100);
-    });
+  /* ── Scroll progress ── */
+  function initScrollProgress() {
+    const bar = $('.scroll-progress');
+    if (!bar) return;
+    const update = () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      const pct = scrollHeight - clientHeight > 0
+        ? (scrollTop / (scrollHeight - clientHeight)) * 100
+        : 0;
+      bar.style.width = pct + '%';
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
   }
 
-  function enableScrollProgress() {
-    const bar = document.querySelector(".scroll-progress");
-    window.addEventListener("scroll", () => {
-      if (!bar) return;
-      const st = window.pageYOffset || document.documentElement.scrollTop;
-      const sh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const p = sh <= 0 ? 0 : (st / sh) * 100;
-      bar.style.width = p + "%";
-    });
-  }
+  /* ── Tab switching ── */
+  function initTabs() {
+    $$('[data-tabs]').forEach(section => {
+      const buttons = $$('.tab-button', section);
+      const panes   = $$('.tab-content', section);
 
-  function enableTabs() {
-    document.querySelectorAll(".tab-nav").forEach(nav => {
-      const buttons = nav.querySelectorAll(".tab-button");
       buttons.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const target = btn.getAttribute("data-tab");
-          const section = nav.closest("[data-tabs]") || document;
+        btn.addEventListener('click', () => {
+          const target = btn.dataset.tab;
 
-          section.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
-          section.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-
-          btn.classList.add("active");
-          const el = document.getElementById(target);
-          if (el) el.classList.add("active");
+          buttons.forEach(b => b.classList.toggle('active', b === btn));
+          panes.forEach(p => p.classList.toggle('active', p.id === target));
         });
       });
     });
   }
 
-  window.addEventListener("DOMContentLoaded", () => {
-    injectShell();
-    setActiveLink();
-    enableSmoothLeave();
-    enableBackToTop();
-    enableNavbarScroll();
-    enableScrollProgress();
-    enableTabs();
+  /* ── Show-more toggle (resume) ── */
+  window.toggle = function (id, btn) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const open = el.classList.toggle('open');
+    btn.textContent = open ? '▾ 收合專案' : '▸ 展開更多專案';
+  };
 
-    // page enter class
-    document.querySelector(".page")?.classList.add("page-fade-in");
+  /* ── Smooth section reveal on scroll ── */
+  function initReveal() {
+    if (!('IntersectionObserver' in window)) return;
+    const style = document.createElement('style');
+    style.textContent = `
+      .reveal { opacity: 0; transform: translateY(18px); transition: opacity .45s ease, transform .45s ease; }
+      .reveal.visible { opacity: 1; transform: none; }
+    `;
+    document.head.appendChild(style);
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+
+    $$('.card, .exp, .row, .edu-row, .lang-row, .skill-card').forEach(el => {
+      el.classList.add('reveal');
+      obs.observe(el);
+    });
+  }
+
+  /* ── Init ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    buildNav();
+    buildFooter();
+    initScrollProgress();
+    initTabs();
+    initReveal();
   });
 })();
