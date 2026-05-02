@@ -6,7 +6,7 @@
 /* ── Reset & Base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
- ::root {
+:root {
   --ink:       #0f0f0e;
   --ink2:      #2e2e2c;
   --ink3:      #5c5c58;
